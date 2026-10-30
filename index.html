@@ -38,7 +38,7 @@
           <span id="save-label">Сохранить изображение встроенными механизмами операционной системы.</span>
         </button>
         <a class="btn btn-primary" id="rec-link" href="recommendation.html">
-          <span id="rec-label">Рекомендация</span>
+          <span id="rec-label">Рекомендации</span>
         </a>
       </div>
     </section>
@@ -50,13 +50,14 @@
       </div>
       <div class="info">
         <div class="info-title" id="info-title">Информация</div>
-        <div class="info-sub" id="info-sub">Рекомендация размера</div>
-        <div class="info-row">
-          <span class="info-key" id="shoe-key">Размер обуви</span>
-          <span class="info-value">38 RU</span>
+        <div class="info-grid">
+          <div class="info-details">
+            <div class="info-sub" id="info-sub">Рекомендация размера</div>
+            <div class="info-line" id="feet-line">Левый: 242.2 мм · Правый: 237.9 мм</div>
+            <div class="info-line" id="snapshot-line">Снимок 1237 × 1400 · 7.8 с</div>
+          </div>
+          <div class="info-size">38 RU</div>
         </div>
-        <div class="info-line" id="feet-line">Левый: 242.2 мм · Правый: 237.9 мм</div>
-        <div class="info-line" id="snapshot-line">Снимок 1237 × 1400 · 7.8 с</div>
       </div>
     </aside>
   </main>
@@ -72,7 +73,7 @@
       bands: "3 диапазона",
       turbo: "ТУРБО",
       save: "Сохранить изображение встроенными механизмами операционной системы.",
-      rec: "Рекомендация",
+      rec: "Рекомендации",
       info: "Информация",
       infoSub: "Рекомендация размера",
       shoe: "Размер обуви",
@@ -124,7 +125,6 @@
     document.getElementById("rec-label").textContent = t.rec;
     document.getElementById("info-title").textContent = t.info;
     document.getElementById("info-sub").textContent = t.infoSub;
-    document.getElementById("shoe-key").textContent = t.shoe;
     document.getElementById("feet-line").textContent = t.feet;
     document.getElementById("snapshot-line").textContent = t.snapshot;
     document.getElementById("result-image").alt = t.alt;
