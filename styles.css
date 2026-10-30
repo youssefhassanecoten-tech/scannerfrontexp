@@ -184,6 +184,11 @@ button, a { font-family: inherit; }
   .rec-page .title-wrap { flex: 1 1 100%; }
   .rec-page .top-actions { width: 100%; justify-content: flex-end; }
 }
+@media (max-width: 350px) {
+  .result-page .topbar { flex-wrap: wrap; row-gap: 5px; }
+  .result-page .title-wrap { flex: 1 1 100%; }
+  .result-page .top-actions { width: 100%; justify-content: flex-end; }
+}
 @media (max-height: 700px) {
   .rec-desc { display: none; }
   .rec-thumb { flex-basis: 46px; width: 46px; max-height: 46px; }
