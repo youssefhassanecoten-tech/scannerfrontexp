@@ -52,6 +52,7 @@
     <aside class="result-right">
       <div class="flatfoot">
         <img src="flatfoot-strip.webp" alt="Справка по плоскостопию" />
+        <div class="flatfoot-source" id="flatfoot-source">На основании клинических рекомендаций Министерства здравоохранения Российской Федерации «Приобретенные деформации стопы», «Статические деформации стопы» (Э. Р. Михайлович, А. И. Волотовский).</div>
       </div>
       <div class="info">
         <div class="info-title" id="info-title">Информация</div>
@@ -85,6 +86,7 @@
       snapshot: "Снимок 1237 × 1400 · 7.8 с",
       alt: "Результат сканирования",
       flatfootAlt: "Справка по плоскостопию",
+      source: "На основании клинических рекомендаций Министерства здравоохранения Российской Федерации «Приобретенные деформации стопы», «Статические деформации стопы» (Э. Р. Михайлович, А. И. Волотовский).",
       langRu: "РУС",
       langEn: "АНГЛ"
     },
@@ -104,6 +106,7 @@
       snapshot: "Snapshot 1237 × 1400 · 7.8 s",
       alt: "Scan result",
       flatfootAlt: "Flatfoot reference",
+      source: "Based on the clinical guidelines of the Ministry of Health of the Russian Federation “Acquired foot deformities”, “Static foot deformities” (E. R. Mikhailovich, A. I. Volotovsky).",
       langRu: "RU",
       langEn: "EN"
     }
@@ -135,6 +138,7 @@
     document.getElementById("snapshot-line").textContent = t.snapshot;
     document.getElementById("result-image").alt = t.alt;
     document.querySelector(".flatfoot img").alt = t.flatfootAlt;
+    document.getElementById("flatfoot-source").textContent = t.source;
     document.getElementById("home-link").href = "home.html?lang=" + lang;
     document.getElementById("rec-link").href = "recommendation.html?lang=" + lang;
     document.querySelectorAll(".lang-btn").forEach((b) => {

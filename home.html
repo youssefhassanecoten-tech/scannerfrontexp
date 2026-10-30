@@ -44,6 +44,7 @@
             <img src="ref_step2.png" alt="Плоскостопие II степени" />
             <img src="ref_step3.png" alt="Плоскостопие III степени" />
           </div>
+          <div class="flatfoot-source" id="flatfoot-source">На основании клинических рекомендаций Министерства здравоохранения Российской Федерации «Приобретенные деформации стопы», «Статические деформации стопы» (Э. Р. Михайлович, А. И. Волотовский).</div>
         </div>
       </div>
 
@@ -56,6 +57,8 @@
           <div class="scan-stage" id="scan-stage">Захват кадров</div>
           <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
           <div class="progress-percent" id="progress-percent">0%</div>
+          <div class="scan-alert" id="scan-alert">Захват завершён — можно сойти со сканера</div>
+          <button type="button" class="scan-abort" id="scan-abort">Прервать</button>
           <div class="scan-done" id="scan-done" hidden>Сканирование завершено</div>
         </div>
       </div>
@@ -80,6 +83,10 @@
       stage: "Захват кадров",
       done: "Сканирование завершено",
       flatfootAlt: "Справка по плоскостопию",
+      source: "На основании клинических рекомендаций Министерства здравоохранения Российской Федерации «Приобретенные деформации стопы», «Статические деформации стопы» (Э. Р. Михайлович, А. И. Волотовский).",
+      stageStitching: "Сшивание изображений",
+      alert: "Захват завершён — можно сойти со сканера",
+      abort: "Прервать",
       langRu: "РУС",
       langEn: "АНГЛ"
     },
@@ -98,6 +105,10 @@
       stage: "Capturing frames",
       done: "Scan complete",
       flatfootAlt: "Flatfoot reference",
+      source: "Based on the clinical guidelines of the Ministry of Health of the Russian Federation “Acquired foot deformities”, “Static foot deformities” (E. R. Mikhailovich, A. I. Volotovsky).",
+      stageStitching: "Stitching images",
+      alert: "Capture finished — you may step off the scanner",
+      abort: "Abort",
       langRu: "RU",
       langEn: "EN"
     }
@@ -117,6 +128,9 @@
     document.getElementById("scan-stage").textContent = t.stage;
     document.getElementById("scan-done").textContent = t.done;
     document.querySelector(".scan-flatfoot img").alt = t.flatfootAlt;
+    document.getElementById("flatfoot-source").textContent = t.source;
+    document.getElementById("scan-alert").textContent = t.alert;
+    document.getElementById("scan-abort").textContent = t.abort;
     document.querySelectorAll("#scan-rules li").forEach((li, i) => {
       li.textContent = t.rules[i];
     });
@@ -134,6 +148,7 @@
     });
   });
 
+  document.getElementById("scan-abort").addEventListener("click", () => location.reload());
   document.getElementById("scan-btn").addEventListener("click", () => {
     if (busy) return;
     busy = true;
@@ -148,6 +163,7 @@
     requestAnimationFrame(() => {
       fill.style.width = "100%";
     });
+    window.setTimeout(() => { stage.textContent = t.stageStitching; }, 900);
     const timer = window.setInterval(() => {
       value = Math.min(99, value + Math.ceil((100 - value) / 5));
       percent.textContent = value + "%";
@@ -159,10 +175,10 @@
       stage.textContent = t.done;
       document.getElementById("scan-done").hidden = false;
       progress.classList.add("done");
-    }, 2000);
+    }, 3000);
     window.setTimeout(() => {
       location.href = "index.html?lang=" + lang;
-    }, 2600);
+    }, 3400);
   });
 
   applyLang();
