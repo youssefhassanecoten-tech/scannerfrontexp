@@ -21,14 +21,43 @@
     </div>
   </header>
 
-  <main class="home-main">
-    <section class="home-card">
-      <h1 id="home-title">Сканирование стоп</h1>
-      <p id="home-text">Поставьте ноги на сканер и нажмите кнопку.</p>
-      <button type="button" class="scan-btn" id="scan-btn">Сканировать</button>
-      <div class="progress-wrap" id="progress-wrap">
-        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-        <div class="progress-status" id="progress-status">Сканирование…</div>
+  <main class="scan-home-main">
+    <section class="scan-home-card">
+      <div class="scan-instruction" id="instruction">
+        <div class="scan-info">
+          <div class="scan-info-title" id="info-title">Перед сканированием</div>
+          <ol class="scan-rules" id="scan-rules">
+            <li>Поставьте стопы на область сканирования.</li>
+            <li>Расположите стопы симметрично относительно краёв.</li>
+            <li>Стойте неподвижно во время сканирования.</li>
+            <li>Нажмите кнопку «Начать сканирование».</li>
+            <li>Дождитесь завершения обработки изображения.</li>
+          </ol>
+        </div>
+        <div class="scan-start-row">
+          <button type="button" class="scan-btn" id="scan-btn">Начать сканирование</button>
+        </div>
+        <div class="scan-flatfoot">
+          <div class="flatfoot-grid">
+            <img src="ref_normal.png" alt="Норма" />
+            <img src="ref_step1.png" alt="Плоскостопие I степени" />
+            <img src="ref_step2.png" alt="Плоскостопие II степени" />
+            <img src="ref_step3.png" alt="Плоскостопие III степени" />
+          </div>
+        </div>
+      </div>
+
+      <div class="scan-progress" id="progress" hidden>
+        <div class="scan-progress-box">
+          <div class="scan-progress-heading">
+            <span class="spinner">◌</span>
+            <strong id="scanning-title">Сканирование выполняется</strong>
+          </div>
+          <div class="scan-stage" id="scan-stage">Захват кадров</div>
+          <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+          <div class="progress-percent" id="progress-percent">0%</div>
+          <div class="scan-done" id="scan-done" hidden>Сканирование завершено</div>
+        </div>
       </div>
     </section>
   </main>
@@ -38,19 +67,37 @@
   const UI = {
     ru: {
       title: "Сканирование стоп",
-      text: "Поставьте ноги на сканер и нажмите кнопку.",
-      scan: "Сканировать",
-      scanning: "Сканирование…",
+      infoTitle: "Перед сканированием",
+      rules: [
+        "Поставьте стопы на область сканирования.",
+        "Расположите стопы симметрично относительно краёв.",
+        "Стойте неподвижно во время сканирования.",
+        "Нажмите кнопку «Начать сканирование».",
+        "Дождитесь завершения обработки изображения."
+      ],
+      scan: "Начать сканирование",
+      scanningTitle: "Сканирование выполняется",
+      stage: "Захват кадров",
       done: "Сканирование завершено",
+      flatfootAlt: "Справка по плоскостопию",
       langRu: "РУС",
       langEn: "АНГЛ"
     },
     en: {
       title: "Foot scan",
-      text: "Place your feet on the scanner and press the button.",
-      scan: "Scan",
-      scanning: "Scanning…",
+      infoTitle: "Before you scan",
+      rules: [
+        "Place your feet on the scanning area.",
+        "Position your feet symmetrically relative to the edges.",
+        "Please stand still while scanning.",
+        "Press the “start scanning” button.",
+        "Wait for the image processing to finish."
+      ],
+      scan: "Start scanning",
+      scanningTitle: "Scanning in progress",
+      stage: "Capturing frames",
       done: "Scan complete",
+      flatfootAlt: "Flatfoot reference",
       langRu: "RU",
       langEn: "EN"
     }
@@ -63,10 +110,16 @@
     const t = UI[lang];
     document.documentElement.lang = lang;
     document.title = t.title;
-    document.getElementById("home-title").textContent = t.title;
-    document.getElementById("home-text").textContent = t.text;
+    document.getElementById("brand").textContent = t.title;
+    document.getElementById("info-title").textContent = t.infoTitle;
     document.getElementById("scan-btn").textContent = t.scan;
-    document.getElementById("progress-status").textContent = t.scanning;
+    document.getElementById("scanning-title").textContent = t.scanningTitle;
+    document.getElementById("scan-stage").textContent = t.stage;
+    document.getElementById("scan-done").textContent = t.done;
+    document.querySelector(".scan-flatfoot img").alt = t.flatfootAlt;
+    document.querySelectorAll("#scan-rules li").forEach((li, i) => {
+      li.textContent = t.rules[i];
+    });
     document.querySelectorAll(".lang-btn").forEach((b) => {
       b.classList.toggle("active", b.dataset.lang === lang);
       b.textContent = b.dataset.lang === "ru" ? t.langRu : t.langEn;
@@ -85,21 +138,27 @@
     if (busy) return;
     busy = true;
     const t = UI[lang];
-    const btn = document.getElementById("scan-btn");
-    const wrap = document.getElementById("progress-wrap");
+    document.getElementById("instruction").hidden = true;
+    const progress = document.getElementById("progress");
+    progress.hidden = false;
     const fill = document.getElementById("progress-fill");
-    const status = document.getElementById("progress-status");
-    btn.disabled = true;
-    btn.textContent = t.scanning;
-    status.textContent = t.scanning;
-    wrap.classList.add("visible");
+    const percent = document.getElementById("progress-percent");
+    const stage = document.getElementById("scan-stage");
+    let value = 0;
     requestAnimationFrame(() => {
       fill.style.width = "100%";
     });
+    const timer = window.setInterval(() => {
+      value = Math.min(99, value + Math.ceil((100 - value) / 5));
+      percent.textContent = value + "%";
+    }, 100);
     window.setTimeout(() => {
-      wrap.classList.add("done");
-      status.textContent = t.done;
-      btn.textContent = t.done;
+      window.clearInterval(timer);
+      fill.style.width = "100%";
+      percent.textContent = "100%";
+      stage.textContent = t.done;
+      document.getElementById("scan-done").hidden = false;
+      progress.classList.add("done");
     }, 2000);
     window.setTimeout(() => {
       location.href = "index.html?lang=" + lang;
