@@ -457,3 +457,7 @@ button, a { font-family: inherit; }
   .info-size { font-size: 28px; }
   .info-grid { gap: 8px; }
 }
+
+/* larger download icon */
+#save-btn svg { width: 21px !important; height: 21px !important; flex: 0 0 auto; }
+@media (max-width: 560px) { #save-btn svg { width: 19px !important; height: 19px !important; } }
