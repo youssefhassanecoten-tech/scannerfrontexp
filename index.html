@@ -8,32 +8,27 @@
 </head>
 <body>
 <div class="page result-page">
-  <header class="topbar">
-    <div class="title-wrap">
-      <span class="ok">✓</span>
-      <h1 id="title">Сканирование завершено</h1>
+  <header class="topbar result-topbar">
+    <a class="home-icon" id="home-link" href="home.html" aria-label="На главную" title="На главную">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg>
+    </a>
+    <div class="seg result-seg" role="tablist">
+      <button type="button" class="active" data-mode="normal" id="mode-normal">Обычный</button>
+      <button type="button" data-mode="bands" id="mode-bands">3 диапазона</button>
+      <button type="button" data-mode="turbo" id="mode-turbo">ТУРБО</button>
     </div>
-    <div class="top-actions">
-      <div class="lang-switch">
-        <button type="button" class="lang-btn active" data-lang="ru">РУС</button>
-        <button type="button" class="lang-btn" data-lang="en">АНГЛ</button>
-      </div>
-      <a class="btn btn-home" id="home-link" href="home.html">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v6h6"/><path d="M20 20a8 8 0 0 0-14-5L4 10"/></svg>
-        <span id="home-label">На главную</span>
-      </a>
+    <div class="lang-switch flag-switch">
+      <button type="button" class="lang-btn active" data-lang="ru" aria-label="Русский" title="Русский">
+        <svg class="flag" viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><rect y="6.67" width="30" height="6.67" fill="#0039a6"/><rect y="13.33" width="30" height="6.67" fill="#d52b1e"/></svg>
+      </button>
+      <button type="button" class="lang-btn" data-lang="en" aria-label="Английский" title="Английский">
+        <svg class="flag" viewBox="0 0 30 20"><rect width="30" height="20" fill="#012169"/><path d="M0 0l30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0l30 20M30 0L0 20" stroke="#c8102e" stroke-width="2"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3"/></svg>
+      </button>
     </div>
   </header>
 
   <main class="result-main">
     <section class="result-left">
-      <div class="viewbar">
-        <span class="viewbar-label" id="view-label">Вид результата</span>
-        <div class="seg">
-          <button type="button" class="active" data-mode="normal" id="mode-normal">Обычный</button>
-          <button type="button" data-mode="bands" id="mode-bands">3 диапазона</button>
-          <button type="button" data-mode="turbo" id="mode-turbo">ТУРБО</button>
-        </div>
       </div>
       <div class="preview">
         <img id="result-image" src="result_g3_normal.png" alt="Результат сканирования" />
@@ -123,9 +118,6 @@
   function applyLang() {
     const t = UI[lang];
     document.documentElement.lang = lang;
-    document.getElementById("title").textContent = t.title;
-    document.getElementById("home-label").textContent = t.home;
-    document.getElementById("view-label").textContent = t.view;
     document.getElementById("mode-normal").textContent = t.normal;
     document.getElementById("mode-bands").textContent = t.bands;
     document.getElementById("mode-turbo").textContent = t.turbo;
@@ -143,7 +135,6 @@
     document.getElementById("rec-link").href = "recommendation.html?lang=" + lang;
     document.querySelectorAll(".lang-btn").forEach((b) => {
       b.classList.toggle("active", b.dataset.lang === lang);
-      b.textContent = b.dataset.lang === "ru" ? t.langRu : t.langEn;
     });
   }
 
