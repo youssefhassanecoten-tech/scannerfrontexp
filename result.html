@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pi result - pressure view</title>
+<style>
+  :root {
+    --accent: #e0a62b;
+    --accent-dark: #c28b16;
+    --ink: #1f2937;
+    --muted: #64748b;
+    --line: #dbe3ef;
+    --soft: #f8fafc;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #f2f4f8; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+  }
+  .app { display: flex; width: 100vw; height: 100vh; overflow: hidden; }
+
+  /* collapsed Ecoten rail, as on the Pi */
+  .sider {
+    flex: 0 0 72px; width: 72px; height: 100%;
+    background: #eceef2; border-right: 1px solid #dde3ea;
+    display: flex; flex-direction: column; align-items: center;
+    padding-top: 18px; gap: 18px; position: relative;
+  }
+  .brand-icon { width: 28px; height: 28px; display: block; border-radius: 4px; }
+  .rail-sep { width: 36px; height: 1px; background: #d7dde7; margin: 2px 0 0; }
+  .rail-icon {
+    width: 38px; height: 38px; border-radius: 9px; display: flex; align-items: center; justify-content: center;
+    color: #4b5563; background: transparent; border: 0; padding: 0; cursor: default;
+  }
+  .rail-icon svg { width: 20px; height: 20px; }
+  .rail-icon.active { background: #dbe4ef; color: #1f3f66; }
+  .rail-lang { display: flex; flex-direction: column; gap: 6px; margin-top: 2px; }
+  .lang {
+    width: 28px; height: 22px; border-radius: 4px; border: 1px solid #cfd7e3; background: #fff;
+    font-size: 9px; font-weight: 800; letter-spacing: .3px; color: #475569;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lang.active { border-color: #c8102e; color: #c8102e; }
+  .rail-bottom { margin-top: auto; margin-bottom: 64px; }
+  .sider-toggle {
+    position: fixed; left: 8px; bottom: 18px; width: 32px; height: 32px; border-radius: 999px;
+    border: 1px solid #cfd7e3; background: #f8fafc; color: #334155;
+    display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 16px rgba(15,23,42,.12);
+    font-size: 13px; z-index: 5;
+  }
+
+  .main {
+    flex: 1; min-width: 0; height: 100%; padding: 12px 20px; background: #f8fafc;
+    overflow: hidden; position: relative;
+  }
+  .card {
+    height: calc(100vh - 24px); width: 100%; background: #fff;
+    border: 1px solid #dfe6ee; border-radius: 8px; padding: 14px 16px;
+    display: flex; flex-direction: column; min-height: 0;
+  }
+  .result-header {
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    margin-bottom: 6px; flex: 0 0 auto;
+  }
+  .done { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 16px; }
+  .done .ok {
+    width: 18px; height: 18px; border-radius: 50%; background: #16a34a; color: #fff;
+    display: inline-flex; align-items: center; justify-content: center; font-size: 12px;
+  }
+  .header-actions { display: flex; align-items: center; gap: 8px; }
+  .recommend {
+    height: 34px; border-radius: 6px; border: 1px solid var(--accent); background: #fffaf0; color: #7a5300;
+    font-size: 13px; font-weight: 700; padding: 0 12px; display: inline-flex; align-items: center; gap: 6px;
+    text-decoration: none;
+  }
+  .recommend:hover { background: var(--accent-tint); }
+  .back {
+    height: 34px; border-radius: 6px; border: 1px solid #1677ff; background: #1677ff; color: #fff;
+    font-size: 14px; padding: 0 14px; display: inline-flex; align-items: center; gap: 6px; cursor: default;
+  }
+  .back svg { width: 14px; height: 14px; }
+
+  .result-layout { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .result-top { display: flex; gap: 18px; flex: 1; min-height: 0; align-items: stretch; }
+  .result-left { flex: 0 0 30%; width: 30%; min-width: 0; display: flex; flex-direction: column; gap: 10px; min-height: 0; }
+
+  /* === the proposed toggle location === */
+  .view-bar {
+    flex: 0 0 auto;
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    min-height: 44px; padding: 5px 7px 5px 12px;
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 10px;
+  }
+  .view-title { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .04em; }
+  .seg { display: inline-flex; align-items: center; background: #f1f5f9; border-radius: 9px; padding: 3px; gap: 2px; white-space: nowrap; }
+  .seg button {
+    border: 0; background: transparent; border-radius: 7px; min-height: 32px; padding: 0 8px;
+    font-size: 11.5px; font-weight: 700; color: #475569; cursor: pointer; font-family: inherit;
+  }
+  .seg button.active { background: var(--accent); color: #fff; box-shadow: 0 2px 7px rgba(224,166,43,.38); }
+
+  .preview {
+    flex: 1 1 auto; min-height: 0; border: 1px solid var(--line); border-radius: 12px;
+    background: #f6f9fd; padding: 8px; display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .preview img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; border-radius: 8px; }
+  .save {
+    flex: 0 0 auto; width: 100%; min-height: 48px; border-radius: 10px;
+    border: 1px solid #d9d9d9; background: #fff; color: #1f2937;
+    font-size: 12px; line-height: 1.25; padding: 8px 10px; cursor: default;
+    display: flex; align-items: center; justify-content: center; gap: 7px; text-align: center;
+  }
+  .save svg { width: 15px; height: 15px; flex: 0 0 auto; }
+
+  .result-right {
+    flex: 1; min-width: 0; min-height: 0; border: 1px solid var(--line); border-radius: 14px;
+    background: #f8fbff; padding: 12px; display: flex; flex-direction: column; gap: 10px;
+  }
+  .flatfoot {
+    flex: 1 1 auto; min-height: 0; border: 1px solid var(--line); border-radius: 12px;
+    background: #f6f9fd; padding: 10px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .flatfoot img { width: 100%; max-height: 100%; min-height: 0; object-fit: contain; display: block; margin: auto; }
+  .flatfoot .source { font-size: 11px; font-weight: 700; color: #4a5563; text-align: center; line-height: 1.3; }
+
+  .info {
+    flex: 0 0 auto; border: 1px solid #cfdaeb; border-radius: 14px;
+    background: #eef4fd; padding: 12px 14px; display: flex; flex-direction: column; gap: 5px;
+    font-size: 13px; color: #334155;
+  }
+  .info .title { font-size: 12px; font-weight: 800; color: #1f2937; text-transform: uppercase; letter-spacing: .03em; margin-bottom: 2px; }
+  .size-title { font-size: 12px; color: #64748b; font-weight: 600; margin-top: 2px; }
+  .size-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .size-key { font-size: 12px; color: #64748b; }
+  .size-val { font-size: 26px; font-weight: 800; color: #1d4ed8; line-height: 1; }
+  .size-alt { font-size: 12px; color: #475569; }
+  .feet { font-size: 12px; color: #475569; }
+  .snapshot { font-size: 11px; color: #64748b; }
+  .fullscreen {
+    position: fixed; right: 18px; bottom: 18px; width: 42px; height: 42px; border-radius: 12px;
+    border: 1px solid #cfd7e3; background: #f8fafc; color: #1f2a37;
+    display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 24px rgba(15,23,42,.14);
+    z-index: 5;
+  }
+  .fullscreen svg { width: 18px; height: 18px; }
+
+  @media (max-width: 1199px) {
+    .main { overflow-y: auto; }
+    .card { height: auto; min-height: calc(100vh - 24px); }
+    .result-top { flex-direction: column; flex: 0 0 auto; }
+    .result-left { flex: initial; width: 100%; }
+    .result-right { min-width: 0; width: 100%; }
+    .preview { min-height: 0; height: min(42vh, 300px); max-height: 300px; }
+    .preview img { max-height: 100%; width: auto; }
+    .flatfoot img { max-height: 34vh; }
+  }
+  @media (max-width: 767px) {
+    .sider { display: none; }
+    .main { padding: 10px; }
+    .card { padding: 12px; }
+    .view-bar { padding-left: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sider">
+    <img class="brand-icon" src="favicon.ico" alt="Ecoten" />
+    <div class="rail-sep"></div>
+    <button class="rail-icon active" title="Scan" aria-label="Scan">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7V4h3M17 4h3v3M20 17v3h-3M7 20H4v-3"/><path d="M7 12h10"/></svg>
+    </button>
+    <button class="rail-icon" title="Exposure" aria-label="Exposure">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <button class="rail-icon" title="Wi-Fi" aria-label="Wi-Fi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9a15 15 0 0 1 18 0M6.5 12.5a10 10 0 0 1 11 0M9.5 16a5 5 0 0 1 5 0"/><circle cx="12" cy="19" r="1"/></svg>
+    </button>
+    <div class="rail-lang">
+      <div class="lang active">RU</div>
+      <div class="lang">EN</div>
+    </div>
+    <div class="rail-bottom">
+      <button class="rail-icon" title="Service" aria-label="Service">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 4v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V7l7-4z"/><path d="M9.5 12l1.8 1.8 3.4-3.6"/></svg>
+      </button>
+    </div>
+    <div class="sider-toggle">›</div>
+  </aside>
+
+  <main class="main">
+    <section class="card">
+      <header class="result-header">
+        <div class="done"><span class="ok">✓</span><span>Scan complete</span></div>
+        <div class="header-actions">
+          <a class="recommend" href="recommendation.html">Recommendation</a>
+          <button class="back">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v6h6"/><path d="M20 20a8 8 0 0 0-14-5L4 10"/></svg>
+            Back to home
+          </button>
+        </div>
+      </header>
+
+      <div class="result-layout">
+        <div class="result-top">
+          <div class="result-left">
+            <div class="view-bar">
+              <span class="view-title">Result view</span>
+              <div class="seg" role="tablist" aria-label="Result view mode">
+                <button id="btn-normal" class="active" role="tab" aria-selected="true">Normal</button>
+                <button id="btn-bands" role="tab" aria-selected="false">3-band</button>
+                <button id="btn-turbo" role="tab" aria-selected="false">TURBO</button>
+              </div>
+            </div>
+            <div class="preview">
+              <img id="result-image" src="result_normal.png" alt="Scan result" />
+            </div>
+            <button class="save">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
+              Save the image using the operating system's built-in mechanisms.
+            </button>
+          </div>
+
+          <div class="result-right">
+            <div class="flatfoot">
+              <img src="flatfoot-strip.webp" alt="Flatfoot classification reference" />
+              <div class="source">Flatfoot reference — source shown on screen</div>
+            </div>
+            <div class="info">
+              <div class="title">Information</div>
+              <div class="size-title">Size recommendation</div>
+              <div class="size-row">
+                <span class="size-key">Shoe size</span>
+                <span class="size-val">38 RU</span>
+                <span class="size-alt">UK 5 · US 7.5</span>
+              </div>
+              <div class="feet">Left: 242.2 mm &nbsp;·&nbsp; Right: 237.9 mm</div>
+              <div class="snapshot">Snapshot 3544 × 3779 · 7.8 s</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="fullscreen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4H4v5M15 4h5v5M20 15v5h-5M4 15v5h5"/></svg>
+    </div>
+  </main>
+</div>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const image = document.getElementById("result-image");
+  const buttons = {
+    normal: document.getElementById("btn-normal"),
+    bands: document.getElementById("btn-bands"),
+    turbo: document.getElementById("btn-turbo"),
+  };
+  const srcs = {
+    normal: "result_normal.png",
+    bands: "result_3band.png",
+    turbo: "result_turbo.png",
+  };
+  function setMode(mode) {
+    if (!srcs[mode]) mode = "normal";
+    image.src = srcs[mode];
+    Object.entries(buttons).forEach(([key, button]) => {
+      const active = key === mode;
+      button.classList.toggle("active", active);
+      button.setAttribute("aria-selected", String(active));
+    });
+  }
+  Object.entries(buttons).forEach(([key, button]) => {
+    button.onclick = () => setMode(key);
+  });
+  setMode(params.get("mode") || "normal");
+</script>
+</body>
+</html>
