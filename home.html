@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Сканирование стоп</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="title-wrap">
+      <img src="favicon.ico" alt="" style="width:26px;height:26px;border-radius:5px" />
+      <h1 id="brand">Сканирование стоп</h1>
+    </div>
+    <div class="top-actions">
+      <div class="lang-switch">
+        <button type="button" class="lang-btn active" data-lang="ru">РУС</button>
+        <button type="button" class="lang-btn" data-lang="en">АНГЛ</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="home-main">
+    <section class="home-card">
+      <h1 id="home-title">Сканирование стоп</h1>
+      <p id="home-text">Поставьте ноги на сканер и нажмите кнопку.</p>
+      <button type="button" class="scan-btn" id="scan-btn">Сканировать</button>
+      <div class="progress-wrap" id="progress-wrap">
+        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="progress-status" id="progress-status">Сканирование…</div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  const UI = {
+    ru: {
+      title: "Сканирование стоп",
+      text: "Поставьте ноги на сканер и нажмите кнопку.",
+      scan: "Сканировать",
+      scanning: "Сканирование…",
+      done: "Сканирование завершено",
+      langRu: "РУС",
+      langEn: "АНГЛ"
+    },
+    en: {
+      title: "Foot scan",
+      text: "Place your feet on the scanner and press the button.",
+      scan: "Scan",
+      scanning: "Scanning…",
+      done: "Scan complete",
+      langRu: "RU",
+      langEn: "EN"
+    }
+  };
+  const params = new URLSearchParams(location.search);
+  let lang = params.get("lang") === "en" ? "en" : "ru";
+  let busy = false;
+
+  function applyLang() {
+    const t = UI[lang];
+    document.documentElement.lang = lang;
+    document.title = t.title;
+    document.getElementById("home-title").textContent = t.title;
+    document.getElementById("home-text").textContent = t.text;
+    document.getElementById("scan-btn").textContent = t.scan;
+    document.getElementById("progress-status").textContent = t.scanning;
+    document.querySelectorAll(".lang-btn").forEach((b) => {
+      b.classList.toggle("active", b.dataset.lang === lang);
+      b.textContent = b.dataset.lang === "ru" ? t.langRu : t.langEn;
+    });
+  }
+
+  document.querySelectorAll(".lang-btn").forEach((b) => {
+    b.addEventListener("click", () => {
+      if (busy) return;
+      lang = b.dataset.lang;
+      applyLang();
+    });
+  });
+
+  document.getElementById("scan-btn").addEventListener("click", () => {
+    if (busy) return;
+    busy = true;
+    const t = UI[lang];
+    const btn = document.getElementById("scan-btn");
+    const wrap = document.getElementById("progress-wrap");
+    const fill = document.getElementById("progress-fill");
+    const status = document.getElementById("progress-status");
+    btn.disabled = true;
+    btn.textContent = t.scanning;
+    status.textContent = t.scanning;
+    wrap.classList.add("visible");
+    requestAnimationFrame(() => {
+      fill.style.width = "100%";
+    });
+    window.setTimeout(() => {
+      wrap.classList.add("done");
+      status.textContent = t.done;
+      btn.textContent = t.done;
+    }, 2000);
+    window.setTimeout(() => {
+      location.href = "index.html?lang=" + lang;
+    }, 2600);
+  });
+
+  applyLang();
+</script>
+</body>
+</html>

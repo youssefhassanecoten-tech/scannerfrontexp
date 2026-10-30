@@ -1,274 +1,168 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Pi result - product lines</title>
-<style>
-  :root { --accent:#e0a62b; --accent-tint:#fdf3dd; --accent-edge:#f0d59a; --ink:#1f2937; --muted:#64748b; --line:#dbe3ef; }
-  * { box-sizing: border-box; }
-  html, body { margin:0; background:#f2f4f8; color:var(--ink); }
-  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
-  .app { display:flex; min-height:100vh; }
-  .sider { flex:0 0 72px; width:72px; background:#eceef2; border-right:1px solid #dde3ea; display:flex; flex-direction:column; align-items:center; padding-top:18px; gap:18px; position:fixed; top:0; bottom:0; left:0; }
-  .brand-icon { width:28px; height:28px; border-radius:4px; }
-  .rail-sep { width:36px; height:1px; background:#d7dde7; }
-  .rail-icon { width:38px; height:38px; border-radius:9px; display:flex; align-items:center; justify-content:center; color:#4b5563; }
-  .rail-icon svg { width:20px; height:20px; }
-  .rail-icon.active { background:#dbe4ef; color:#1f3f66; }
-  .rail-lang { display:flex; flex-direction:column; gap:6px; }
-  .lang { width:28px; height:22px; border-radius:4px; border:1px solid #cfd7e3; background:#fff; font-size:9px; font-weight:800; color:#475569; display:flex; align-items:center; justify-content:center; cursor:pointer; font-family:inherit; }
-  .lang.active { border-color:#c8102e; color:#c8102e; }
-  .rail-bottom { margin-top:auto; margin-bottom:64px; }
-  .sider-toggle { position:fixed; left:8px; bottom:18px; width:32px; height:32px; border-radius:999px; border:1px solid #cfd7e3; background:#f8fafc; color:#334155; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 16px rgba(15,23,42,.12); font-size:13px; z-index:5; }
-
-  .main { flex:1; margin-left:72px; padding:12px 20px 30px; background:#f8fafc; }
-  .card { background:#fff; border:1px solid #dfe6ee; border-radius:8px; padding:14px 16px; }
-  .header { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:6px; }
-  .title-wrap { display:flex; align-items:center; gap:10px; }
-  h1 { margin:0; font-size:18px; font-weight:750; letter-spacing:-.01em; }
-  .experimental { background:var(--accent-tint); border:1px solid var(--accent-edge); color:#7a5300; border-radius:999px; font-size:9px; font-weight:800; padding:4px 8px; text-transform:uppercase; letter-spacing:.04em; }
-  .back { height:34px; border-radius:6px; border:1px solid #cfd7e3; background:#fff; color:#334155; font-size:13px; padding:0 14px; display:inline-flex; align-items:center; gap:6px; text-decoration:none; }
-  .back svg { width:14px; height:14px; }
-  .sub { color:var(--muted); font-size:12px; margin:2px 0 14px; }
-
-  .lines { display:flex; flex-direction:column; gap:9px; }
-  .line-row { display:flex; align-items:center; gap:14px; border:1px solid var(--line); border-radius:12px; background:#fff; padding:10px 12px; min-height:112px; }
-  .num { flex:0 0 30px; width:30px; height:30px; border-radius:999px; background:var(--accent-tint); color:#8a6410; border:1px solid var(--accent-edge); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; }
-  .thumb { flex:0 0 84px; width:84px; height:96px; background:#f8fafc; border-radius:8px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
-  .thumb img { max-width:80px; max-height:92px; object-fit:contain; }
-  .body { flex:1; min-width:0; }
-  .line-name { font-size:10px; font-weight:800; color:#8a6410; text-transform:uppercase; letter-spacing:.05em; }
-  .product-name { font-size:14px; font-weight:800; line-height:1.25; margin-top:2px; }
-  .desc { font-size:11.5px; line-height:1.35; color:#475569; margin-top:3px; }
-  .link { font-size:11px; font-weight:700; color:#1d4ed8; text-decoration:none; margin-top:3px; display:inline-block; }
-  .arrow { flex:0 0 auto; color:#94a3b8; font-size:20px; padding-left:6px; }
-  .foot { display:flex; justify-content:space-between; gap:12px; margin-top:12px; color:#64748b; font-size:10px; line-height:1.35; }
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Рекомендация товаров</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div class="app">
-  <aside class="sider">
-    <img class="brand-icon" src="favicon.ico" alt="Ecoten" />
-    <div class="rail-sep"></div>
-    <div class="rail-icon active" title="Scan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7V4h3M17 4h3v3M20 17v3h-3M7 20H4v-3"/><path d="M7 12h10"/></svg></div>
-    <div class="rail-icon" title="Exposure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></div>
-    <div class="rail-icon" title="Wi-Fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9a15 15 0 0 1 18 0M6.5 12.5a10 10 0 0 1 11 0M9.5 16a5 5 0 0 1 5 0"/><circle cx="12" cy="19" r="1"/></svg></div>
-    <div class="rail-lang"><button type="button" class="lang active" data-lang="ru">RU</button><button type="button" class="lang" data-lang="en">EN</button></div>
-    <div class="rail-bottom"><div class="rail-icon" title="Service"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 4v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V7l7-4z"/><path d="M9.5 12l1.8 1.8 3.4-3.6"/></svg></div></div>
-    <div class="sider-toggle">›</div>
-  </aside>
+<div class="page rec-page">
+  <header class="topbar">
+    <div class="title-wrap">
+      <h1 id="title">Рекомендация товаров</h1>
+    </div>
+    <div class="top-actions">
+      <div class="lang-switch">
+        <button type="button" class="lang-btn active" data-lang="ru">РУС</button>
+        <button type="button" class="lang-btn" data-lang="en">АНГЛ</button>
+      </div>
+      <a class="btn" id="back-link" href="index.html">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v6h6"/><path d="M20 20a8 8 0 0 0-14-5L4 10"/></svg>
+        <span id="back-label">Назад к результату сканирования</span>
+      </a>
+    </div>
+  </header>
 
-  <main class="main">
-    <section class="card">
-      <header class="header">
-        <div class="title-wrap">
-          <h1>Product recommendation</h1>
-        </div>
-        <a class="back" href="result.html">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v6h6"/><path d="M20 20a8 8 0 0 0-14-5L4 10"/></svg>
-          <span class="back-label">Back to scan result</span>
-        </a>
-      </header>
-
-      <div class="lines">
-        <div class="line-row">
-          <div class="num">1</div>
-          <div class="thumb"><img src="lines/8388389.jpg" alt="ACTIV" /></div>
-          <div class="body">
-            <div class="line-name">Компрессионный трикотаж</div>
-            <div class="product-name">Гольфы с закрытым носком ACTIV</div>
-            <div class="desc">Компрессионные гольфы, закрытый носок, 1–2 класс компрессии.</div>
-            <a class="link" href="https://ecoten.ru/goods/8388389" target="_blank" rel="noreferrer">View product →</a>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-        <div class="line-row">
-          <div class="num">2</div>
-          <div class="thumb"><img src="lines/1075.jpg" alt="ПРР-125" /></div>
-          <div class="body">
-            <div class="line-name">Корсеты и корректоры осанки</div>
-            <div class="product-name">Корсет пояснично - крестцовый полужесткой фиксации ПРР-125</div>
-            <div class="desc">Высота 25 см, 4 пластиковых ребра жёсткости, дышащий хлопковый материал.</div>
-            <a class="link" href="https://ecoten.ru/goods/1075" target="_blank" rel="noreferrer">View product →</a>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-        <div class="line-row">
-          <div class="num">3</div>
-          <div class="thumb"><img src="lines/835.jpg" alt="ОВО-445" /></div>
-          <div class="body">
-            <div class="line-name">Бандажи</div>
-            <div class="product-name">Бандаж-трусы ортопедические при опущении органов малого таза ОВО-445</div>
-            <div class="desc">Ортопедическая поддержка тазового дна, регулируемая застёжка.</div>
-            <a class="link" href="https://ecoten.ru/goods/835" target="_blank" rel="noreferrer">View product →</a>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-        <div class="line-row">
-          <div class="num">4</div>
-          <div class="thumb"><img src="lines/1035.jpg" alt="AS-E04" /></div>
-          <div class="body">
-            <div class="line-name">Ортезы на суставы</div>
-            <div class="product-name">Бандаж на голеностопный сустав эластичный AS-E04</div>
-            <div class="desc">Эластичная фиксация голеностопного сустава, анатомическая посадка.</div>
-            <a class="link" href="https://ecoten.ru/goods/1035" target="_blank" rel="noreferrer">View product →</a>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-        <div class="line-row">
-          <div class="num">5</div>
-          <div class="thumb"><img src="lines/912.jpg" alt="LUM101N" /></div>
-          <div class="body">
-            <div class="line-name">Стельки и корректоры стопы</div>
-            <div class="product-name">Стельки ортопедические LUM101N</div>
-            <div class="desc">Эластичная поддержка продольного и поперечного сводов, кожаное покрытие.</div>
-            <a class="link" href="https://ecoten.ru/goods/912" target="_blank" rel="noreferrer">View product →</a>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-        <div class="line-row">
-          <div class="num">6</div>
-          <div class="thumb"><img src="lines/1347.jpg" alt="LM-706N.038R" /></div>
-          <div class="body">
-            <div class="line-name">Обувь ортопедическая</div>
-            <div class="product-name">Обувь ортопедическая малосложная LM ORTHOPEDIC, женская LM-706N.038R</div>
-            <div class="desc">Женская ортопедическая обувь с поддержкой стопы и удобной посадкой.</div>
-            <a class="link" href="https://ecoten.ru/goods/1347" target="_blank" rel="noreferrer">View product →</a>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-        <div class="line-row">
-          <div class="num">7</div>
-          <div class="thumb"><img src="lines/1195.jpg" alt="LUXS-8" /></div>
-          <div class="body">
-            <div class="line-name">Коррекция фигуры</div>
-            <div class="product-name">Бандаж компрессионный LUXS-8</div>
-            <div class="desc">Компрессионный бандаж для коррекции фигуры и поддержки.</div>
-            <a class="link" href="https://ecoten.ru/goods/1195" target="_blank" rel="noreferrer">View product →</a>
-          </div>
-          <div class="arrow">›</div>
-        </div>
-
-        <div class="line-row">
-          <div class="num">8</div>
-          <div class="thumb"><img src="lines/882.jpg" alt="CO-04" /></div>
-          <div class="body">
-            <div class="line-name">Подушки и матрасы</div>
-            <div class="product-name">Подушка двухслойная (карбоновый слой с ионами серебра) CO-04-NO.2(12/10)</div>
-            <div class="desc">Подушка с эффектом памяти Memory Foam, размер 56 × 32 см.</div>
-            <a class="link" href="https://ecoten.ru/goods/882" target="_blank" rel="noreferrer">View product →</a>
-          </div>
-          <div class="arrow">›</div>
+  <main class="rec-main">
+    <div class="rec-list">
+      <div class="rec-row">
+        <span class="rec-num">1</span>
+        <div class="rec-thumb"><img src="lines/8388389.jpg" alt="" /></div>
+        <div class="rec-body">
+          <div class="rec-line" data-ru="Компрессионный трикотаж" data-en="Compression hosiery">Компрессионный трикотаж</div>
+          <div class="rec-name" data-ru="Гольфы с закрытым носком ACTIV" data-en="ACTIV closed-toe compression knee-highs">Гольфы с закрытым носком ACTIV</div>
+          <div class="rec-desc" data-ru="Компрессионные гольфы, закрытый носок, 1–2 класс компрессии." data-en="Closed-toe compression knee-highs, compression class 1–2.">Компрессионные гольфы, закрытый носок, 1–2 класс компрессии.</div>
+          <a class="rec-link" data-view href="https://ecoten.ru/goods/8388389" target="_blank" rel="noreferrer">Смотреть товар →</a>
         </div>
       </div>
 
-      <div class="foot">
-        <span>Illustrative catalogue preview — one product per line; no suitability claim.</span>
-        <span>Product data and images: ecoten.ru</span>
+      <div class="rec-row">
+        <span class="rec-num">2</span>
+        <div class="rec-thumb"><img src="lines/1075.jpg" alt="" /></div>
+        <div class="rec-body">
+          <div class="rec-line" data-ru="Корсеты и корректоры осанки" data-en="Corsets and posture correctors">Корсеты и корректоры осанки</div>
+          <div class="rec-name" data-ru="Корсет пояснично - крестцовый полужесткой фиксации ПРР-125" data-en="PRR-125 lumbosacral semi-rigid corset">Корсет пояснично - крестцовый полужесткой фиксации ПРР-125</div>
+          <div class="rec-desc" data-ru="Высота 25 см, четыре пластиковых ребра жёсткости, дышащий материал." data-en="Height 25 cm, four plastic stays, breathable cotton-rich fabric.">Высота 25 см, четыре пластиковых ребра жёсткости, дышащий материал.</div>
+          <a class="rec-link" data-view href="https://ecoten.ru/goods/1075" target="_blank" rel="noreferrer">Смотреть товар →</a>
+        </div>
       </div>
-    </section>
+
+      <div class="rec-row">
+        <span class="rec-num">3</span>
+        <div class="rec-thumb"><img src="lines/835.jpg" alt="" /></div>
+        <div class="rec-body">
+          <div class="rec-line" data-ru="Бандажи" data-en="Bandages">Бандажи</div>
+          <div class="rec-name" data-ru="Бандаж-трусы ортопедические при опущении органов малого таза ОВО-445" data-en="OVO-445 orthopedic pelvic support briefs">Бандаж-трусы ортопедические при опущении органов малого таза ОВО-445</div>
+          <div class="rec-desc" data-ru="Ортопедическая поддержка тазового дна, регулируемая застёжка." data-en="Orthopedic pelvic-floor support with adjustable closure.">Ортопедическая поддержка тазового дна, регулируемая застёжка.</div>
+          <a class="rec-link" data-view href="https://ecoten.ru/goods/835" target="_blank" rel="noreferrer">Смотреть товар →</a>
+        </div>
+      </div>
+
+      <div class="rec-row">
+        <span class="rec-num">4</span>
+        <div class="rec-thumb"><img src="lines/1035.jpg" alt="" /></div>
+        <div class="rec-body">
+          <div class="rec-line" data-ru="Ортезы на суставы" data-en="Joint orthoses">Ортезы на суставы</div>
+          <div class="rec-name" data-ru="Бандаж на голеностопный сустав эластичный AS-E04" data-en="AS-E04 elastic ankle brace">Бандаж на голеностопный сустав эластичный AS-E04</div>
+          <div class="rec-desc" data-ru="Эластичная фиксация голеностопного сустава, анатомическая посадка." data-en="Elastic ankle support with anatomical fit.">Эластичная фиксация голеностопного сустава, анатомическая посадка.</div>
+          <a class="rec-link" data-view href="https://ecoten.ru/goods/1035" target="_blank" rel="noreferrer">Смотреть товар →</a>
+        </div>
+      </div>
+
+      <div class="rec-row">
+        <span class="rec-num">5</span>
+        <div class="rec-thumb"><img src="lines/912.jpg" alt="" /></div>
+        <div class="rec-body">
+          <div class="rec-line" data-ru="Стельки и корректоры стопы" data-en="Insoles and foot correctors">Стельки и корректоры стопы</div>
+          <div class="rec-name" data-ru="Стельки ортопедические LUM101N" data-en="LUM101N orthopedic insoles">Стельки ортопедические LUM101N</div>
+          <div class="rec-desc" data-ru="Эластичная поддержка продольного и поперечного сводов, кожаное покрытие." data-en="Elastic medial and transverse arch support, leather cover.">Эластичная поддержка продольного и поперечного сводов, кожаное покрытие.</div>
+          <a class="rec-link" data-view href="https://ecoten.ru/goods/912" target="_blank" rel="noreferrer">Смотреть товар →</a>
+        </div>
+      </div>
+
+      <div class="rec-row">
+        <span class="rec-num">6</span>
+        <div class="rec-thumb"><img src="lines/1347.jpg" alt="" /></div>
+        <div class="rec-body">
+          <div class="rec-line" data-ru="Обувь ортопедическая" data-en="Orthopedic footwear">Обувь ортопедическая</div>
+          <div class="rec-name" data-ru="Обувь ортопедическая малосложная LM ORTHOPEDIC, женская LM-706N.038R" data-en="LM-706N.038R women's orthopedic shoes">Обувь ортопедическая малосложная LM ORTHOPEDIC, женская LM-706N.038R</div>
+          <div class="rec-desc" data-ru="Женская ортопедическая обувь с поддержкой стопы и удобной посадкой." data-en="Women's orthopedic shoe with arch support and comfortable fit.">Женская ортопедическая обувь с поддержкой стопы и удобной посадкой.</div>
+          <a class="rec-link" data-view href="https://ecoten.ru/goods/1347" target="_blank" rel="noreferrer">Смотреть товар →</a>
+        </div>
+      </div>
+
+      <div class="rec-row">
+        <span class="rec-num">7</span>
+        <div class="rec-thumb"><img src="lines/1195.jpg" alt="" /></div>
+        <div class="rec-body">
+          <div class="rec-line" data-ru="Коррекция фигуры" data-en="Shapewear">Коррекция фигуры</div>
+          <div class="rec-name" data-ru="Бандаж компрессионный LUXS-8" data-en="LUXS-8 compression bandage">Бандаж компрессионный LUXS-8</div>
+          <div class="rec-desc" data-ru="Компрессионный бандаж для коррекции фигуры и поддержки." data-en="Compression bandage for shaping and support.">Компрессионный бандаж для коррекции фигуры и поддержки.</div>
+          <a class="rec-link" data-view href="https://ecoten.ru/goods/1195" target="_blank" rel="noreferrer">Смотреть товар →</a>
+        </div>
+      </div>
+
+      <div class="rec-row">
+        <span class="rec-num">8</span>
+        <div class="rec-thumb"><img src="lines/882.jpg" alt="" /></div>
+        <div class="rec-body">
+          <div class="rec-line" data-ru="Подушки и матрасы" data-en="Pillows and mattresses">Подушки и матрасы</div>
+          <div class="rec-name" data-ru="Подушка двухслойная (карбоновый слой с ионами серебра) CO-04-NO.2(12/10)" data-en="CO-04 two-layer memory-foam pillow">Подушка двухслойная (карбоновый слой с ионами серебра) CO-04-NO.2(12/10)</div>
+          <div class="rec-desc" data-ru="Подушка с эффектом памяти Memory Foam, размер 56 × 32 см." data-en="Memory-foam pillow, 56 × 32 cm.">Подушка с эффектом памяти Memory Foam, размер 56 × 32 см.</div>
+          <a class="rec-link" data-view href="https://ecoten.ru/goods/882" target="_blank" rel="noreferrer">Смотреть товар →</a>
+        </div>
+      </div>
+    </div>
   </main>
 </div>
+
 <script>
   const UI = {
     ru: {
       title: "Рекомендация товаров",
-      exp: "Экспериментально",
-      sub: "По одному товару из каждой основной линейки, в порядке каталога.",
       back: "Назад к результату сканирования",
       view: "Смотреть товар",
-      footL: "Иллюстративный предпросмотр каталога — по одному товару на линейку; без оценки пригодности.",
-      footR: "Данные и изображения товаров: ecoten.ru"
+      langRu: "РУС",
+      langEn: "АНГЛ"
     },
     en: {
       title: "Product recommendation",
-      exp: "Experimental",
-      sub: "One product from each major product line, in catalogue order.",
       back: "Back to scan result",
       view: "View product",
-      footL: "Illustrative catalogue preview — one product per line; no suitability claim.",
-      footR: "Product data and images: ecoten.ru"
+      langRu: "RU",
+      langEn: "EN"
     }
   };
-  const LINES = {
-    ru: ["Компрессионный трикотаж", "Корсеты и корректоры осанки", "Бандажи", "Ортезы на суставы", "Стельки и корректоры стопы", "Обувь ортопедическая", "Коррекция фигуры", "Подушки и матрасы"],
-    en: ["Compression hosiery", "Corsets and posture correctors", "Bandages", "Joint orthoses", "Insoles and foot correctors", "Orthopedic footwear", "Shapewear", "Pillows and mattresses"]
-  };
-  const TITLES = {
-    ru: [
-      "Гольфы с закрытым носком ACTIV",
-      "Корсет пояснично - крестцовый полужесткой фиксации ПРР-125",
-      "Бандаж-трусы ортопедические при опущении органов малого таза ОВО-445",
-      "Бандаж на голеностопный сустав эластичный AS-E04",
-      "Стельки ортопедические LUM101N",
-      "Обувь ортопедическая малосложная LM ORTHOPEDIC, женская LM-706N.038R",
-      "Бандаж компрессионный LUXS-8",
-      "Подушка двухслойная (карбоновый слой с ионами серебра) CO-04-NO.2(12/10)"
-    ],
-    en: [
-      "ACTIV closed-toe compression knee-highs",
-      "PRR-125 lumbosacral semi-rigid corset",
-      "OVO-445 orthopedic pelvic support briefs",
-      "AS-E04 elastic ankle brace",
-      "LUM101N orthopedic insoles",
-      "LM-706N.038R women's orthopedic shoes",
-      "LUXS-8 compression bandage",
-      "CO-04 two-layer memory-foam pillow"
-    ]
-  };
-  const DESCS = {
-    ru: [
-      "Компрессионные гольфы, закрытый носок, 1–2 класс компрессии.",
-      "Высота 25 см, 4 пластиковых ребра жёсткости, дышащий хлопковый материал.",
-      "Ортопедическая поддержка тазового дна, регулируемая застёжка.",
-      "Эластичная фиксация голеностопного сустава, анатомическая посадка.",
-      "Эластичная поддержка продольного и поперечного сводов, кожаное покрытие.",
-      "Женская ортопедическая обувь с поддержкой стопы и удобной посадкой.",
-      "Компрессионный бандаж для коррекции фигуры и поддержки.",
-      "Подушка с эффектом памяти Memory Foam, размер 56 × 32 см."
-    ],
-    en: [
-      "Closed-toe compression knee-highs, compression class 1–2.",
-      "Height 25 cm, four plastic stays, breathable cotton-rich fabric.",
-      "Orthopedic pelvic-floor support with adjustable closure.",
-      "Elastic ankle support with anatomical fit.",
-      "Elastic medial and transverse arch support, leather cover.",
-      "Women's orthopedic shoe with arch support and comfortable fit.",
-      "Compression bandage for shaping and support.",
-      "Memory-foam pillow, 56 × 32 cm."
-    ]
-  };
-  let lang = new URLSearchParams(location.search).get("lang") || "ru";
-  function apply(lang) {
-    lang = lang === "en" ? "en" : "ru";
-    document.documentElement.lang = lang;
+  const params = new URLSearchParams(location.search);
+  let lang = params.get("lang") === "en" ? "en" : "ru";
+
+  function applyLang() {
     const t = UI[lang];
-    document.querySelector("h1").textContent = t.title;
-    document.querySelector(".back-label").textContent = t.back;
-    const back = document.querySelector(".back");
-    back.href = "result.html?lang=" + lang;
-    document.querySelectorAll(".line-row").forEach((row, i) => {
-      row.querySelector(".line-name").textContent = LINES[lang][i];
-      row.querySelector(".product-name").textContent = TITLES[lang][i];
-      row.querySelector(".desc").textContent = DESCS[lang][i];
-      row.querySelector(".link").textContent = t.view + " →";
+    document.documentElement.lang = lang;
+    document.title = t.title;
+    document.getElementById("title").textContent = t.title;
+    document.getElementById("back-label").textContent = t.back;
+    document.getElementById("back-link").href = "index.html?lang=" + lang;
+    document.querySelectorAll("[data-ru]").forEach((el) => {
+      el.textContent = el.dataset[lang];
     });
-    const foot = document.querySelectorAll(".foot span");
-    foot[0].textContent = t.footL;
-    foot[1].textContent = t.footR;
-    document.querySelectorAll(".lang").forEach((b) => b.classList.toggle("active", b.dataset.lang === lang));
+    document.querySelectorAll("[data-view]").forEach((el) => {
+      el.textContent = t.view + " →";
+    });
+    document.querySelectorAll(".lang-btn").forEach((b) => {
+      b.classList.toggle("active", b.dataset.lang === lang);
+      b.textContent = b.dataset.lang === "ru" ? t.langRu : t.langEn;
+    });
   }
-  document.querySelectorAll(".lang").forEach((b) => {
-    b.addEventListener("click", () => apply(b.dataset.lang));
+
+  document.querySelectorAll(".lang-btn").forEach((b) => {
+    b.addEventListener("click", () => {
+      lang = b.dataset.lang;
+      applyLang();
+    });
   });
-  apply(lang);
+  applyLang();
 </script>
 </body>
 </html>
