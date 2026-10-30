@@ -1,68 +1,65 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
 <title>Результат сканирования</title>
-<link rel="stylesheet" href="styles.css" />
+<link href="styles.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="page result-page">
-  <header class="topbar result-topbar">
-    <a class="home-icon" id="home-link" href="home.html" aria-label="На главную" title="На главную">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9 21v-6h6v6"/></svg>
-    </a>
-    <div class="seg result-seg" role="tablist">
-      <button type="button" class="active" data-mode="normal" id="mode-normal">Обычный</button>
-      <button type="button" data-mode="bands" id="mode-bands">3 диапазона</button>
-      <button type="button" data-mode="turbo" id="mode-turbo">ТУРБО</button>
-    </div>
-    <div class="lang-switch flag-switch">
-      <button type="button" class="lang-btn active" data-lang="ru" aria-label="Русский" title="Русский">
-        <svg class="flag" viewBox="0 0 30 20"><rect width="30" height="20" fill="#fff"/><rect y="6.67" width="30" height="6.67" fill="#0039a6"/><rect y="13.33" width="30" height="6.67" fill="#d52b1e"/></svg>
-      </button>
-      <button type="button" class="lang-btn" data-lang="en" aria-label="Английский" title="Английский">
-        <svg class="flag" viewBox="0 0 30 20"><rect width="30" height="20" fill="#012169"/><path d="M0 0l30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0l30 20M30 0L0 20" stroke="#c8102e" stroke-width="2"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"/><path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3"/></svg>
-      </button>
-    </div>
-  </header>
-
-  <main class="result-main">
-    <section class="result-left">
-      <div class="preview">
-        <img id="result-image" src="result_g3_normal.png" alt="Результат сканирования" />
-      </div>
-      <div class="actions">
-        <button type="button" class="btn" id="save-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
-          <span id="save-label">Сохранить изображение встроенными механизмами операционной системы.</span>
-        </button>
-        <a class="btn btn-primary" id="rec-link" href="recommendation.html">
-          <span id="rec-label">Рекомендации</span>
-        </a>
-      </div>
-    </section>
-
-    <aside class="result-right">
-      <div class="flatfoot">
-        <img src="flatfoot-strip.webp" alt="Справка по плоскостопию" />
-        <div class="flatfoot-source" id="flatfoot-source">На основании клинических рекомендаций Министерства здравоохранения Российской Федерации «Приобретенные деформации стопы», «Статические деформации стопы» (Э. Р. Михайлович, А. И. Волотовский).</div>
-      </div>
-      <div class="info">
-        <div class="info-title" id="info-title">Информация</div>
-        <div class="info-grid">
-          <div class="info-details">
-            <div class="info-sub" id="info-sub">Рекомендация размера</div>
-            <div class="info-line" id="feet-line">Левый: 242.2 мм · Правый: 237.9 мм</div>
-            <div class="info-line" id="snapshot-line">Снимок 1237 × 1400 · 7.8 с</div>
-          </div>
-          <div class="info-size">38 RU</div>
-        </div>
-      </div>
-    </aside>
-  </main>
+<header class="topbar result-topbar">
+<a aria-label="На главную" class="home-icon" href="home.html" id="home-link" title="На главную">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path><path d="M9 21v-6h6v6"></path></svg>
+</a>
+<div class="seg result-seg" role="tablist">
+<button class="active" data-mode="normal" id="mode-normal" type="button">Обычный</button>
+<button data-mode="bands" id="mode-bands" type="button">3 диапазона</button>
+<button data-mode="turbo" id="mode-turbo" type="button">ТУРБО</button>
+</div>
+<div class="lang-switch flag-switch">
+<button aria-label="Русский" class="lang-btn active" data-lang="ru" title="Русский" type="button">
+<svg class="flag" viewbox="0 0 30 20"><rect fill="#fff" height="20" width="30"></rect><rect fill="#0039a6" height="6.67" width="30" y="6.67"></rect><rect fill="#d52b1e" height="6.67" width="30" y="13.33"></rect></svg>
+</button>
+<button aria-label="Английский" class="lang-btn" data-lang="en" title="Английский" type="button">
+<svg class="flag" viewbox="0 0 30 20"><rect fill="#012169" height="20" width="30"></rect><path d="M0 0l30 20M30 0L0 20" stroke="#fff" stroke-width="4"></path><path d="M0 0l30 20M30 0L0 20" stroke="#c8102e" stroke-width="2"></path><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"></path><path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3"></path></svg>
+</button>
+</div>
+</header>
+<main class="result-main">
+<section class="result-left">
+<div class="preview">
+<img alt="Результат сканирования" id="result-image" src="result_g3_normal.png"/>
 </div>
 
+<div class="info">
+<div class="info-title" id="info-title">Информация</div>
+<div class="info-grid">
+<div class="info-details">
+<div class="info-sub" id="info-sub">Рекомендация размера</div>
+<div class="info-line" id="feet-line">Левый: 242.2 мм · Правый: 237.9 мм</div>
+<div class="info-line" id="snapshot-line">Снимок 1237 × 1400 · 7.8 с</div>
+</div>
+<div class="info-size">38 RU</div>
+</div>
+</div></section>
+<aside class="result-right">
+<div class="flatfoot">
+<img alt="Справка по плоскостопию" src="flatfoot-strip.webp"/>
+<div class="flatfoot-source" id="flatfoot-source">На основании клинических рекомендаций Министерства здравоохранения Российской Федерации «Приобретенные деформации стопы», «Статические деформации стопы» (Э. Р. Михайлович, А. И. Волотовский).</div>
+</div>
+
+<div class="actions">
+<button aria-label="Сохранить изображение" class="btn" id="save-btn" title="Сохранить изображение" type="button">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 20h16"></path></svg>
+
+</button>
+<a class="btn btn-primary" href="recommendation.html" id="rec-link">
+<span id="rec-label">Рекомендации</span>
+</a>
+</div></aside>
+</main>
+</div>
 <script>
   const UI = {
     ru: {
@@ -121,7 +118,6 @@
     document.getElementById("mode-normal").textContent = t.normal;
     document.getElementById("mode-bands").textContent = t.bands;
     document.getElementById("mode-turbo").textContent = t.turbo;
-    document.getElementById("save-label").textContent = t.save;
     document.getElementById("rec-label").textContent = t.rec;
     document.getElementById("info-title").textContent = t.info;
     document.getElementById("info-sub").textContent = t.infoSub;

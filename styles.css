@@ -461,3 +461,16 @@ button, a { font-family: inherit; }
 /* larger download icon */
 #save-btn svg { width: 21px !important; height: 21px !important; flex: 0 0 auto; }
 @media (max-width: 560px) { #save-btn svg { width: 19px !important; height: 19px !important; } }
+
+.result-right { display: flex; flex-direction: column; gap: 8px; }
+.result-right .flatfoot { flex: 1 1 auto; min-height: 0; }
+.result-right .flatfoot-source { font-size: 13px !important; line-height: 1.35 !important; }
+.result-right .actions { flex: 0 0 auto; width: 100%; max-width: 620px; margin: 0 auto; }
+#save-btn { font-size: 0 !important; gap: 0 !important; }
+#save-btn svg { width: 26px !important; height: 26px !important; }
+.result-left .info { flex: 0 0 auto; margin-top: 2px; }
+@media (orientation: portrait) and (max-width: 1100px) {
+  .result-right .flatfoot { max-height: 21vh !important; }
+  .result-right .actions { max-width: 100%; }
+  .result-left .info { margin-top: 0; }
+}
