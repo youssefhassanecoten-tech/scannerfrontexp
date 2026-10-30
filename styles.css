@@ -474,3 +474,6 @@ button, a { font-family: inherit; }
   .result-right .actions { max-width: 100%; }
   .result-left .info { margin-top: 0; }
 }
+
+.flatfoot-grid-lg { width: 100%; height: 100%; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 4px; }
+.flatfoot-grid-lg img { width: 100%; height: 100%; object-fit: contain; }
