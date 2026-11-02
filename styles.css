@@ -572,3 +572,23 @@ button, a { font-family: inherit; }
     max-height: none !important; object-fit: contain !important;
   }
 }
+
+/* portrait: use the four separate reference images in a true 1x4 row */
+@media (orientation: portrait) and (max-width: 1100px) {
+  .result-right .flatfoot > img { display: none !important; }
+  .flatfoot-mobile {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-template-rows: auto !important;
+    gap: 3px !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+  .flatfoot-mobile img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 18vh !important;
+    object-fit: contain !important;
+  }
+}
