@@ -157,8 +157,17 @@
     a.click();
   });
 
+  document.getElementById("result-image").addEventListener("click", () => {
+    const modal = document.getElementById("image-modal");
+    document.getElementById("image-modal-img").src = document.getElementById("result-image").src;
+    modal.classList.add("open");
+  });
+  document.getElementById("image-modal-close").addEventListener("click", () => document.getElementById("image-modal").classList.remove("open"));
+  document.getElementById("image-modal").addEventListener("click", (e) => { if (e.target.id === "image-modal") e.currentTarget.classList.remove("open"); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") document.getElementById("image-modal").classList.remove("open"); });
   applyLang();
   applyMode("normal");
 </script>
+<div class="image-modal" id="image-modal" role="dialog" aria-modal="true"><button type="button" class="image-modal-close" id="image-modal-close" aria-label="Закрыть">×</button><img id="image-modal-img" alt="Результат сканирования"/></div>
 </body>
 </html>
