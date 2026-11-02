@@ -502,3 +502,20 @@ button, a { font-family: inherit; }
   .flatfoot-mobile img { width: 100%; max-height: 21vh !important; object-fit: contain; }
   .result-right .flatfoot > img:not(.flatfoot-mobile img) { display: none !important; }
 }
+
+/* phone: use every pixel vertically, 2x2 example, bottom actions */
+@media (orientation: portrait) and (max-width: 1100px) {
+  .result-page { height: 100dvh !important; overflow: hidden !important; display: flex !important; }
+  .result-main { flex: 1 1 auto !important; min-height: 0 !important; display: flex !important; flex-direction: column !important; }
+  .result-left { flex: 1 1 46% !important; min-height: 0 !important; display: flex !important; flex-direction: column !important; }
+  .result-left .preview { flex: 1 1 auto !important; height: auto !important; min-height: 0 !important; }
+  .result-left .info { flex: 0 0 auto !important; }
+  .result-right { flex: 1 1 54% !important; min-height: 0 !important; display: flex !important; flex-direction: column !important; }
+  .result-right .flatfoot { flex: 1 1 auto !important; min-height: 0 !important; max-height: none !important; display: flex !important; flex-direction: column !important; overflow: hidden !important; }
+  .result-right .flatfoot > img { display: none !important; }
+  .flatfoot-mobile { display: grid !important; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 4px; flex: 1 1 auto; min-height: 0; width: 100%; }
+  .flatfoot-mobile img { width: 100%; height: 100%; max-height: none !important; object-fit: contain; }
+  .flatfoot-source { flex: 0 0 auto !important; font-size: 11px !important; line-height: 1.25 !important; }
+  .result-right .actions { flex: 0 0 auto !important; margin-top: auto !important; }
+  .flag-switch { gap: 0; padding: 2px; }
+}
