@@ -553,3 +553,13 @@ button, a { font-family: inherit; }
   .scan-flatfoot .flatfoot-grid img { max-height: 16vh !important; }
   .scan-flatfoot .flatfoot-source { font-size: 11px !important; line-height: 1.25 !important; }
 }
+
+/* phone: example in one horizontal row, no 2x2 scroll */
+@media (max-width: 600px) {
+  .result-right .flatfoot { display: block !important; height: auto !important; max-height: none !important; overflow: visible !important; }
+  .flatfoot-mobile { display: none !important; }
+  .result-right .flatfoot > img:first-child {
+    display: block !important; width: 100% !important; height: auto !important; max-height: 18vh !important; object-fit: contain !important;
+  }
+  .flatfoot-source { display: block !important; font-size: 10px !important; line-height: 1.25 !important; }
+}
