@@ -563,3 +563,12 @@ button, a { font-family: inherit; }
   }
   .flatfoot-source { display: block !important; font-size: 10px !important; line-height: 1.25 !important; }
 }
+
+/* force 1x4 horizontal example on every portrait phone/tablet */
+@media (orientation: portrait) and (max-width: 1100px) {
+  .flatfoot-mobile { display: none !important; }
+  .result-right .flatfoot > img:first-child {
+    display: block !important; width: 100% !important; height: auto !important;
+    max-height: none !important; object-fit: contain !important;
+  }
+}
