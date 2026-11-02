@@ -548,3 +548,8 @@ button, a { font-family: inherit; }
   .flatfoot-mobile img { display: block !important; width: 100% !important; height: auto !important; max-height: 15vh !important; object-fit: contain !important; }
   .flatfoot-source { display: block !important; font-size: 11px !important; line-height: 1.3 !important; }
 }
+
+@media (max-width: 600px) {
+  .scan-flatfoot .flatfoot-grid img { max-height: 16vh !important; }
+  .scan-flatfoot .flatfoot-source { font-size: 11px !important; line-height: 1.25 !important; }
+}
