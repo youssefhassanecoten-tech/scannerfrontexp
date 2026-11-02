@@ -539,3 +539,12 @@ button, a { font-family: inherit; }
   .flatfoot-source { display: block !important; font-size: 11px !important; line-height: 1.3 !important; padding: 3px 2px 0 !important; }
   .result-right .actions { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 8px !important; margin-top: 7px !important; width: 100% !important; max-width: none !important; }
 }
+
+/* phone example: always show the four labelled panels */
+@media (max-width: 600px) {
+  .result-right .flatfoot { display: block !important; height: auto !important; max-height: none !important; overflow: visible !important; }
+  .result-right .flatfoot > img { display: none !important; }
+  .flatfoot-mobile { display: grid !important; grid-template-columns: 1fr 1fr; gap: 4px; width: 100%; }
+  .flatfoot-mobile img { display: block !important; width: 100% !important; height: auto !important; max-height: 15vh !important; object-fit: contain !important; }
+  .flatfoot-source { display: block !important; font-size: 11px !important; line-height: 1.3 !important; }
+}
