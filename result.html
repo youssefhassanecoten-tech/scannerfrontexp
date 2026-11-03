@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Результат сканирования</title>
+<link href="styles.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="page result-page">
+<header class="topbar result-topbar">
+<a aria-label="На главную" class="home-icon" href="home.html" id="home-link" title="На главную">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path><path d="M9 21v-6h6v6"></path></svg>
+</a>
+<div class="seg result-seg" role="tablist">
+<button class="active" data-mode="normal" id="mode-normal" type="button">Обычный</button>
+<button data-mode="bands" id="mode-bands" type="button">3 диапазона</button>
+<button data-mode="turbo" id="mode-turbo" type="button">ТУРБО</button>
+</div>
+<div class="lang-switch flag-switch">
+<button aria-label="Русский" class="lang-btn active" data-lang="ru" title="Русский" type="button">
+<svg class="flag" viewbox="0 0 30 20"><rect fill="#fff" height="20" width="30"></rect><rect fill="#0039a6" height="6.67" width="30" y="6.67"></rect><rect fill="#d52b1e" height="6.67" width="30" y="13.33"></rect></svg>
+</button>
+<button aria-label="Английский" class="lang-btn" data-lang="en" title="Английский" type="button">
+<svg class="flag" viewbox="0 0 30 20"><rect fill="#012169" height="20" width="30"></rect><path d="M0 0l30 20M30 0L0 20" stroke="#fff" stroke-width="4"></path><path d="M0 0l30 20M30 0L0 20" stroke="#c8102e" stroke-width="2"></path><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"></path><path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3"></path></svg>
+</button>
+</div>
+</header>
+<main class="result-main">
+<section class="result-left">
+<div class="preview">
+<img alt="Результат сканирования" id="result-image" src="result_g3_normal.png"/>
+</div>
+
+<div class="info">
+<div class="info-title" id="info-title">Информация</div>
+<div class="info-grid">
+<div class="info-details">
+<div class="info-sub" id="info-sub">Рекомендация размера</div>
+<div class="info-line" id="feet-line">Левый: 242.2 мм · Правый: 237.9 мм</div>
+<div class="info-line" id="snapshot-line">Снимок 1237 × 1400 · 7.8 с</div>
+</div>
+<div class="info-size">38 RU</div>
+</div>
+</div></section>
+<aside class="result-right">
+<div class="flatfoot">
+<img src="flatfoot-strip.webp" alt="Справка по плоскостопию"/><div class="flatfoot-mobile"><img src="ref_normal.png" alt="Норма"/><img src="ref_step1.png" alt="Плоскостопие I степени"/><img src="ref_step2.png" alt="Плоскостопие II степени"/><img src="ref_step3.png" alt="Плоскостопие III степени"/></div>
+<div class="flatfoot-source" id="flatfoot-source">На основании клинических рекомендаций Министерства здравоохранения Российской Федерации «Приобретенные деформации стопы», «Статические деформации стопы» (Э. Р. Михайлович, А. И. Волотовский).</div>
+</div>
+
+<div class="actions">
+<button aria-label="Сохранить изображение" class="btn" id="save-btn" title="Сохранить изображение" type="button">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="14"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 20h16"></path></svg>
+
+</button>
+<a class="btn btn-primary" href="recommendation.html" id="rec-link">
+<span id="rec-label">Рекомендации</span>
+</a>
+</div></aside>
+</main>
+</div>
+<script>
+  const UI = {
+    ru: {
+      title: "Сканирование завершено",
+      home: "На главную",
+      view: "Вид результата",
+      normal: "Обычный",
+      bands: "3 диапазона",
+      turbo: "ТУРБО",
+      save: "Сохранить изображение встроенными механизмами операционной системы.",
+      rec: "Рекомендации",
+      info: "Информация",
+      infoSub: "Рекомендация размера",
+      shoe: "Размер обуви",
+      feet: "Левый: 242.2 мм · Правый: 237.9 мм",
+      snapshot: "Снимок 1237 × 1400 · 7.8 с",
+      alt: "Результат сканирования",
+      flatfootAlt: "Справка по плоскостопию",
+      source: "На основании клинических рекомендаций Министерства здравоохранения Российской Федерации «Приобретенные деформации стопы», «Статические деформации стопы» (Э. Р. Михайлович, А. И. Волотовский).",
+      langRu: "РУС",
+      langEn: "АНГЛ"
+    },
+    en: {
+      title: "Scan complete",
+      home: "Back to home",
+      view: "Result view",
+      normal: "Normal",
+      bands: "3-band",
+      turbo: "TURBO",
+      save: "Save the image using the operating system's built-in mechanisms.",
+      rec: "Recommendation",
+      info: "Information",
+      infoSub: "Size recommendation",
+      shoe: "Shoe size",
+      feet: "Left: 242.2 mm · Right: 237.9 mm",
+      snapshot: "Snapshot 1237 × 1400 · 7.8 s",
+      alt: "Scan result",
+      flatfootAlt: "Flatfoot reference",
+      source: "Based on the clinical guidelines of the Ministry of Health of the Russian Federation “Acquired foot deformities”, “Static foot deformities” (E. R. Mikhailovich, A. I. Volotovsky).",
+      langRu: "RU",
+      langEn: "EN"
+    }
+  };
+  const MODES = {
+    normal: "result_g3_normal.png",
+    bands: "result_g3_3band.png",
+    turbo: "result_g3_turbo.png"
+  };
+  const params = new URLSearchParams(location.search);
+  let lang = params.get("lang") === "en" ? "en" : "ru";
+  let mode = "normal";
+
+  function applyLang() {
+    const t = UI[lang];
+    document.documentElement.lang = lang;
+    document.getElementById("mode-normal").textContent = t.normal;
+    document.getElementById("mode-bands").textContent = t.bands;
+    document.getElementById("mode-turbo").textContent = t.turbo;
+    document.getElementById("rec-label").textContent = t.rec;
+    document.getElementById("info-title").textContent = t.info;
+    document.getElementById("info-sub").textContent = t.infoSub;
+    document.getElementById("feet-line").textContent = t.feet;
+    document.getElementById("snapshot-line").textContent = t.snapshot;
+    document.getElementById("result-image").alt = t.alt;
+    document.querySelector(".flatfoot img").alt = t.flatfootAlt;
+    document.getElementById("flatfoot-source").textContent = t.source;
+    document.getElementById("home-link").href = "index.html?lang=" + lang;
+    document.getElementById("rec-link").href = "recommendation.html?lang=" + lang;
+    document.querySelectorAll(".lang-btn").forEach((b) => {
+      b.classList.toggle("active", b.dataset.lang === lang);
+    });
+  }
+
+  function applyMode(next) {
+    mode = next;
+    document.getElementById("result-image").src = MODES[mode];
+    document.querySelectorAll(".seg button").forEach((b) => {
+      b.classList.toggle("active", b.dataset.mode === mode);
+    });
+  }
+
+  document.querySelectorAll(".lang-btn").forEach((b) => {
+    b.addEventListener("click", () => {
+      lang = b.dataset.lang;
+      applyLang();
+    });
+  });
+  document.querySelectorAll(".seg button").forEach((b) => {
+    b.addEventListener("click", () => applyMode(b.dataset.mode));
+  });
+  document.getElementById("save-btn").addEventListener("click", () => {
+    const a = document.createElement("a");
+    a.href = MODES[mode];
+    a.download = "scan-result.png";
+    a.click();
+  });
+
+  document.getElementById("result-image").addEventListener("click", () => {
+    const modal = document.getElementById("image-modal");
+    document.getElementById("image-modal-img").src = document.getElementById("result-image").src;
+    modal.classList.add("open");
+  });
+  document.getElementById("image-modal-close").addEventListener("click", () => document.getElementById("image-modal").classList.remove("open"));
+  document.getElementById("image-modal").addEventListener("click", (e) => { if (e.target.id === "image-modal") e.currentTarget.classList.remove("open"); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape") document.getElementById("image-modal").classList.remove("open"); });
+  applyLang();
+  applyMode("normal");
+</script>
+<div class="image-modal" id="image-modal" role="dialog" aria-modal="true"><button type="button" class="image-modal-close" id="image-modal-close" aria-label="Закрыть" onclick="this.parentElement.classList.remove('open')">×</button><img id="image-modal-img" alt="Результат сканирования"/></div>
+</body>
+</html>
