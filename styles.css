@@ -696,3 +696,17 @@ button, a { font-family: inherit; }
   }
   .scan-flatfoot .flatfoot-source { margin-top: 4px; font-size: 12px !important; line-height: 1.35 !important; }
 }
+
+/* final home layout: balanced spacing, no over-zoom */
+.scan-instruction { justify-content: space-evenly !important; gap: 14px !important; }
+.scan-flatfoot { flex: 1 1 auto !important; min-height: 0 !important; display: flex !important; flex-direction: column !important; justify-content: center !important; gap: 8px !important; }
+.flatfoot-trim { flex: 0 1 auto !important; height: auto !important; display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 18px !important; align-items: end !important; width: 100% !important; }
+.flatfoot-trim img { width: 100% !important; height: auto !important; max-height: 32vh !important; object-fit: contain !important; }
+.scan-flatfoot .flatfoot-source { font-size: 12px !important; line-height: 1.35 !important; text-align: center !important; }
+@media (max-width: 600px) {
+  .scan-instruction { gap: 8px !important; }
+  .scan-flatfoot { justify-content: flex-start !important; }
+  .flatfoot-trim { gap: 3px !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+  .flatfoot-trim img { max-height: 22vh !important; }
+  .scan-flatfoot .flatfoot-source { font-size: 11px !important; }
+}
