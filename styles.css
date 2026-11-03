@@ -644,3 +644,7 @@ button, a { font-family: inherit; }
   .result-right .info-line, .result-right .info-sub { font-size: 13px !important; }
   .result-right .actions .btn { font-size: 14px !important; }
 }
+
+/* four example panels touch edge-to-edge */
+.flatfoot-trim { gap: 0 !important; column-gap: 0 !important; }
+.flatfoot-trim img { display: block !important; margin: 0 !important; padding: 0 !important; }
