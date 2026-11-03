@@ -710,3 +710,25 @@ button, a { font-family: inherit; }
   .flatfoot-trim img { max-height: 22vh !important; }
   .scan-flatfoot .flatfoot-source { font-size: 11px !important; }
 }
+
+/* larger home example images */
+.scan-flatfoot .flatfoot-trim img {
+  max-width: clamp(100px, 14vw, 160px) !important;
+  max-height: clamp(150px, 26vh, 230px) !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+}
+@media (max-width: 600px) {
+  .scan-flatfoot .flatfoot-trim img {
+    max-width: 100% !important;
+    max-height: 24vh !important;
+  }
+}
+
+.flatfoot-source { overflow-wrap: anywhere; word-break: break-word; max-width: 100%; }
+@media (min-width: 601px) {
+  .scan-flatfoot { min-height: 0; flex: 0 0 auto; }
+  .scan-flatfoot .flatfoot-original { max-height: 48vh; width: auto; object-fit: contain; }
+  .scan-flatfoot .flatfoot-source { display: block !important; flex: 0 0 auto; font-size: 12px !important; line-height: 1.35 !important; margin-top: 6px; }
+}
