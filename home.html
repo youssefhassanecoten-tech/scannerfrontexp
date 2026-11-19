@@ -31,6 +31,38 @@ body::after{bottom:-160px;left:-110px;width:420px;height:420px;background:radial
 h2{margin:0 0 8px;font-size:clamp(26px,3.4vw,36px)} .rule{width:60px;height:3px;border-radius:2px;background:linear-gradient(90deg,#b98b39,var(--gold));margin:10px 0 16px}
 .side h3{margin:0 0 12px;font:700 21px/1 -apple-system,sans-serif}
 @media(min-width:960px){.board{grid-template-columns:1fr 1fr;grid-template-areas:"intro examples" "steps cta"} .intro{grid-area:intro} .examples{grid-area:examples} .steps-card{grid-area:steps} .cta-card{grid-area:cta} .cta-card .gold-btn{max-width:none}}
+
+/* fit viewport without page scroll on desktop/tablet landscape */
+@media (min-width:960px) and (min-height:620px){
+  html,body{height:100%;overflow:hidden}
+  .page{height:100dvh;max-height:100dvh;overflow:hidden;display:flex;flex-direction:column;padding:12px 20px}
+  .top{flex:0 0 auto;padding:4px 2px 10px}
+  .logo{width:34px;height:34px}
+  .brand{font-size:clamp(22px,2.2vw,28px)}
+  #instruction{flex:1 1 auto;min-height:0;display:flex}
+  #instruction[hidden]{display:none!important}
+  .board{flex:1 1 auto;min-height:0;margin-top:10px;gap:12px;align-items:stretch}
+  .board .card{min-height:0;padding:14px 18px}
+  h2{font-size:clamp(22px,2.2vw,28px);margin:0 0 4px}
+  .rule{margin:6px 0 10px}
+  .steps li{font-size:clamp(15px,1.35vw,18px);margin-bottom:8px;gap:10px;line-height:1.35}
+  .steps li::before{flex:0 0 28px;height:28px;font-size:14px}
+  .side h3{margin:0 0 8px;font-size:18px}
+  .ff{gap:6px}
+  .ff img{max-height:min(17vh,140px)}
+  .ff-cap{margin-top:4px;font-size:12px;line-height:1.2}
+  .src{margin-top:8px;padding-top:8px;font-size:12px;line-height:1.4}
+  .gold-btn{padding:14px 22px;font-size:clamp(18px,1.7vw,22px)}
+  .cta-card div{font-size:14px !important;line-height:1.45 !important}
+  #progress{flex:1 1 auto;min-height:0;margin:10px auto 0;width:100%;max-width:760px;display:flex;flex-direction:column;justify-content:center;padding:18px 22px}
+  #progress[hidden]{display:none!important}
+  #progress > div:first-child{font-size:clamp(22px,2.4vw,26px)!important;margin-bottom:4px!important}
+  .stage,.pct{font-size:16px}
+  .bar{margin:10px auto;max-width:620px;height:18px}
+  .alert{margin-top:10px;padding:10px 12px;font-size:14px;max-width:620px}
+  .abort{margin-top:10px;padding:8px 18px;font-size:14px}
+  #scan-done{margin-top:8px!important;font-size:18px!important}
+}
 </style></head><body><div class="page">
 <header class="top"><img class="logo" src="favicon.ico" alt=""/><div class="brand" id="brand">Сканирование стоп</div><div class="sp"></div>
       <div class="lang">
