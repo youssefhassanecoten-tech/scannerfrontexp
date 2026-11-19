@@ -22,6 +22,11 @@
   .rec-link{font-size:clamp(10px,2vw,12px)!important}
   #title{font-size:clamp(18px,4vw,24px)}
   @media (max-width:700px){ .rec-list{grid-template-columns:1fr} }
+  /* language switch as flags (matches result page) */
+  .lang-switch{display:inline-flex;gap:6px;align-items:center}
+  .lang-switch .lang-btn{border:1px solid transparent;background:transparent;border-radius:999px;padding:4px 6px;cursor:pointer;line-height:0}
+  .lang-switch .lang-btn.active{border-color:#dbc9a4;background:#fff}
+  .lang-switch .flag{width:24px;height:auto;border-radius:3px;display:block;box-shadow:0 1px 2px rgba(0,0,0,.16)}
 </style>
 </head>
 <body>
@@ -32,8 +37,12 @@
     </div>
     <div class="top-actions">
       <div class="lang-switch">
-        <button type="button" class="lang-btn active" data-lang="ru">РУС</button>
-        <button type="button" class="lang-btn" data-lang="en">АНГЛ</button>
+        <button aria-label="Русский" class="lang-btn active" data-lang="ru" title="Русский" type="button">
+          <svg class="flag" viewBox="0 0 30 20"><rect fill="#fff" height="20" width="30"></rect><rect fill="#0039a6" height="6.67" width="30" y="6.67"></rect><rect fill="#d52b1e" height="6.67" width="30" y="13.33"></rect></svg>
+        </button>
+        <button aria-label="Английский" class="lang-btn" data-lang="en" title="Английский" type="button">
+          <svg class="flag" viewBox="0 0 30 20"><rect fill="#012169" height="20" width="30"></rect><path d="M0 0l30 20M30 0L0 20" stroke="#fff" stroke-width="4"></path><path d="M0 0l30 20M30 0L0 20" stroke="#c8102e" stroke-width="2"></path><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="6"></path><path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="3"></path></svg>
+        </button>
       </div>
       <a class="btn" id="back-link" href="index.html">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v6h6"/><path d="M20 20a8 8 0 0 0-14-5L4 10"/></svg>
@@ -170,7 +179,6 @@
     });
     document.querySelectorAll(".lang-btn").forEach((b) => {
       b.classList.toggle("active", b.dataset.lang === lang);
-      b.textContent = b.dataset.lang === "ru" ? t.langRu : t.langEn;
     });
   }
 
