@@ -163,8 +163,7 @@
     </a>
     <div class="seg" role="tablist">
       <button class="active" data-mode="normal" id="mode-normal" type="button">Обычный</button>
-      <button data-mode="bands" id="mode-bands" type="button">3 диапазона</button>
-      <button data-mode="turbo" id="mode-turbo" type="button">ТУРБО</button>
+      <button data-mode="turbo" id="mode-turbo" type="button">Карта давления</button>
     </div>
     <div class="rp-lang">
       <button aria-label="Русский" class="lang-btn active" data-lang="ru" title="Русский" type="button">
@@ -236,8 +235,7 @@
       home: "На главную",
       view: "Вид результата",
       normal: "Обычный",
-      bands: "3 диапазона",
-      turbo: "ТУРБО",
+      turbo: "Карта давления",
       save: "Сохранить изображение встроенными механизмами операционной системы.",
       rec: "Рекомендации",
       info: "Информация",
@@ -256,8 +254,7 @@
       home: "Back to home",
       view: "Result view",
       normal: "Normal",
-      bands: "3-band",
-      turbo: "TURBO",
+      turbo: "Pressure map",
       save: "Save the image using the operating system's built-in mechanisms.",
       rec: "Recommendation",
       info: "Information",
@@ -274,7 +271,6 @@
   };
   const MODES = {
     normal: "result_g3_normal.png",
-    bands: "result_g3_3band.png",
     turbo: "result_g3_turbo.png"
   };
   const params = new URLSearchParams(location.search);
@@ -285,7 +281,6 @@
     const t = UI[lang];
     document.documentElement.lang = lang;
     document.getElementById("mode-normal").textContent = t.normal;
-    document.getElementById("mode-bands").textContent = t.bands;
     document.getElementById("mode-turbo").textContent = t.turbo;
     document.getElementById("rec-label").textContent = t.rec;
     document.getElementById("info-title").textContent = t.info;
