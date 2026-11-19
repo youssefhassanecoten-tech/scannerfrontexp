@@ -28,8 +28,7 @@
 
   /* header */
   .hs-head{display:flex;align-items:center;gap:12px;padding:6px 2px 16px;border-bottom:1px solid var(--rule)}
-  .hs-logo{width:40px;height:40px;flex:0 0 auto;display:block;
-    filter:drop-shadow(0 3px 6px rgba(58,154,165,.28))}
+  .hs-logo{width:32px;height:32px;flex:0 0 auto;display:block;border-radius:7px;object-fit:contain}
   .hs-div{width:1px;height:26px;background:linear-gradient(var(--gold),rgba(166,124,52,.25));flex:0 0 auto}
   .hs-title{font-size:26px;font-weight:700;margin:0;letter-spacing:.2px;line-height:1.1;min-width:0}
   .hs-head-actions{margin-left:auto;flex:0 0 auto}
@@ -98,7 +97,7 @@
   @media (max-width:620px){
     .hs-page{padding:14px 14px 30px}
     .hs-title{font-size:20px}
-    .hs-logo{width:34px;height:34px}
+    .hs-logo{width:28px;height:28px}
     .hs-card{padding:20px 18px 18px;border-radius:18px}
     .hs-card-title{font-size:26px}
     .hs-rules li{font-size:16px;gap:11px}
@@ -114,16 +113,7 @@
 <body>
 <div class="hs-page">
   <header class="hs-head">
-    <svg class="hs-logo" viewBox="0 0 48 48" aria-hidden="true">
-      <defs>
-        <radialGradient id="vasLogo" cx="35%" cy="30%" r="85%">
-          <stop offset="0" stop-color="#6fc9d1"/>
-          <stop offset="1" stop-color="#3a9aa5"/>
-        </radialGradient>
-      </defs>
-      <circle cx="24" cy="24" r="23" fill="url(#vasLogo)"/>
-      <path d="M12.5 32.8 C 15.5 19.5, 27.5 11.5, 35.7 12.4 C 33 25.3, 22 33.6, 12.5 32.8 Z" fill="#fff"/>
-    </svg>
+    <img src="favicon.ico" class="hs-logo" alt="" />
     <span class="hs-div" aria-hidden="true"></span>
     <h1 class="hs-title" id="brand">Сканирование стоп</h1>
     <div class="hs-head-actions">
