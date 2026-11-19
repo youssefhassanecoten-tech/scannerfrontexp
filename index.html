@@ -108,6 +108,27 @@
     .ff-sep{height:52px}
     .hs-source{font-size:12.5px}
   }
+  /* ---- fluid, device-adaptive sizing (mobile / tablet / desktop) ---- */
+  html,body{overflow-x:hidden}
+  .hs-page{max-width:min(764px,100%);padding:clamp(12px,3.2vw,22px) clamp(12px,4vw,22px) calc(clamp(28px,6vw,44px) + env(safe-area-inset-bottom))}
+  .hs-head{flex-wrap:nowrap;gap:clamp(8px,2vw,12px);padding-bottom:clamp(12px,2.4vw,16px)}
+  .hs-logo{width:clamp(26px,5.6vw,32px);height:auto}
+  .hs-title{font-size:clamp(17px,4.6vw,26px);min-width:0;overflow-wrap:anywhere}
+  .hs-lang .lang-btn{font-size:clamp(10.5px,2.4vw,13px);padding:clamp(6px,1.5vw,7px) clamp(9px,2.4vw,14px)}
+  .hs-card{margin-top:clamp(12px,2.5vw,18px);padding:clamp(16px,4.4vw,26px) clamp(14px,4vw,26px) clamp(16px,4vw,24px);border-radius:clamp(16px,4vw,22px)}
+  .hs-card-title{font-size:clamp(22px,5.4vw,31px)}
+  .hs-underline{width:clamp(46px,11vw,58px);margin:clamp(8px,2vw,12px) 0 clamp(14px,3vw,20px)}
+  .hs-rules li{font-size:clamp(15px,3.9vw,18px);gap:clamp(9px,2.2vw,14px);margin-bottom:clamp(11px,2.6vw,15px);overflow-wrap:anywhere}
+  .hs-rules li::before{width:clamp(24px,5.6vw,29px);height:clamp(24px,5.6vw,29px);font-size:clamp(12px,2.9vw,15px)}
+  .hs-start{margin:clamp(18px,4.4vw,26px) 0 clamp(16px,3.8vw,24px)}
+  .hs-btn{font-size:clamp(17px,4.4vw,24px);padding:clamp(14px,3.2vw,19px) clamp(16px,4vw,24px)}
+  .ff-grid{gap:clamp(3px,1vw,6px)}
+  .ff-item img{max-width:clamp(64px,16vw,118px)}
+  .ff-cap{font-size:clamp(10px,2.6vw,15px);margin-top:clamp(6px,1.6vw,10px);overflow-wrap:normal;word-break:normal}
+  .ff-sep{height:clamp(40px,9vw,62px)}
+  .hs-source{font-size:clamp(10.5px,2.7vw,13.5px);margin-top:clamp(16px,3.8vw,22px);padding-top:clamp(12px,2.8vw,16px);overflow-wrap:anywhere}
+  @media (max-width:360px){ .hs-head{flex-wrap:wrap} .hs-head-actions{margin-left:0} }
+  @media (min-width:1024px){ .hs-page{max-width:820px} }
 </style>
 </head>
 <body>

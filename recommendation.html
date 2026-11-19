@@ -5,6 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Рекомендации</title>
 <link rel="stylesheet" href="styles.css" />
+<style>
+  /* fluid, device-adaptive: natural scrolling + responsive grid + clamp type */
+  html,body{height:auto;min-height:100%;overflow-y:auto;overflow-x:hidden}
+  .rec-page{height:auto!important;min-height:100dvh;overflow:visible!important;
+    padding:clamp(10px,2.4vw,16px) clamp(12px,3vw,20px) calc(clamp(16px,4vw,28px) + env(safe-area-inset-bottom))}
+  .rec-main{flex:1 1 auto;overflow:visible}
+  .rec-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none!important;
+    grid-auto-rows:auto;gap:clamp(8px,2vw,14px)}
+  .rec-row{height:auto!important;min-height:0;padding:clamp(6px,1.6vw,10px) clamp(8px,2vw,12px);gap:clamp(8px,2vw,12px)}
+  .rec-thumb{flex:0 0 clamp(56px,12vw,96px);width:clamp(56px,12vw,96px);height:auto;max-height:none}
+  .rec-thumb img{width:100%;height:auto;max-width:none;max-height:clamp(64px,14vw,110px);object-fit:contain}
+  .rec-line{font-size:clamp(9px,1.8vw,11px)!important}
+  .rec-name{font-size:clamp(13px,2.6vw,16px)!important}
+  .rec-desc{display:block;font-size:clamp(11px,2.2vw,13px)!important}
+  .rec-link{font-size:clamp(10px,2vw,12px)!important}
+  #title{font-size:clamp(18px,4vw,24px)}
+  @media (max-width:700px){ .rec-list{grid-template-columns:1fr} }
+</style>
 </head>
 <body>
 <div class="page rec-page">

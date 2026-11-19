@@ -96,6 +96,31 @@
     .rp-size{font-size:28px}
     .rp-flat-row img{max-height:120px}
   }
+  /* ---- fluid, device-adaptive sizing (mobile / tablet / desktop) ---- */
+  html,body{overflow-x:hidden}
+  .rp-page{max-width:min(1120px,100%);padding:clamp(12px,2.4vw,16px) clamp(12px,3vw,20px) calc(clamp(24px,4vw,34px) + env(safe-area-inset-bottom))}
+  .rp-top{gap:clamp(8px,2vw,12px);padding-bottom:clamp(10px,2vw,14px)}
+  .rp-home{width:clamp(34px,8vw,40px);height:clamp(34px,8vw,40px)}
+  .seg button{font-size:clamp(11px,2.4vw,13px);padding:clamp(6px,1.4vw,7px) clamp(9px,2.4vw,15px)}
+  .flag{width:clamp(22px,5vw,26px);height:auto}
+  .rp-main{gap:clamp(12px,2.4vw,16px)}
+  .rp-info{padding:clamp(12px,3vw,16px) clamp(14px,3vw,18px)}
+  .rp-info-title{font-size:clamp(17px,3.4vw,20px)}
+  .rp-sub{font-size:clamp(13px,2.8vw,15px)}
+  .rp-line{font-size:clamp(12px,2.6vw,14px);overflow-wrap:anywhere}
+  .rp-size{font-size:clamp(26px,6vw,34px)}
+  .rp-flat{padding:clamp(10px,2.6vw,14px)}
+  .rp-flat-row img{max-height:clamp(90px,18vw,150px)}
+  .flatfoot-source{font-size:clamp(10.5px,2.4vw,12px);overflow-wrap:anywhere}
+  .rp-dl{width:clamp(46px,10vw,54px);height:clamp(46px,10vw,54px)}
+  .rp-rec{height:clamp(46px,10vw,54px);font-size:clamp(15px,3.2vw,17px)}
+  @media (max-width:900px){ .rp-main{grid-template-columns:1fr} }
+  @media (max-width:560px){
+    .rp-top{flex-wrap:wrap}
+    .seg{order:3;width:100%;justify-content:center;margin:6px 0 0}
+    .rp-lang{margin-left:auto}
+    .rp-info-grid{flex-wrap:wrap;row-gap:6px}
+  }
 </style>
 </head>
 <body>
