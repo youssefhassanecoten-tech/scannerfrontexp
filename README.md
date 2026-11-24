@@ -13,3 +13,7 @@ This repository's root serves the built React app (`index.html` + `assets/`), so
 - Service diagnostics, logs, SSH terminal, and Wi-Fi / Hotspot settings
 
 The live device is served at `http://footscaner.local/` (also `192.168.1.221` and hotspot `10.42.0.1`).
+
+## Demo mode
+
+On GitHub Pages, pressing **начать сканирование** runs a 7-second simulated scan and then shows the bundled example result — no Pi backend required. The measurement table is filled with the values of that example image.
